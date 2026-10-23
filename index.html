@@ -36,5 +36,15 @@ canvas{display:block}
 </head>
 <body>
 <div id="game"></div>
+<script>
+/* 주소창·하단바가 보였다 사라져도 게임 화면이 잘리지 않게: 실제로 보이는 높이로 맞춰요 */
+(function(){var g=document.getElementById('game'),last=0;
+function vis(){var a=[window.innerHeight],vv=window.visualViewport;if(vv&&vv.height)a.push(vv.height);if(document.documentElement&&document.documentElement.clientHeight)a.push(document.documentElement.clientHeight);return Math.round(Math.min.apply(null,a));}
+function fit(){var h=vis();if(!h||h===last)return;last=h;g.style.height=h+'px';try{window.dispatchEvent(new Event('resize'))}catch(e){}}
+fit();window.addEventListener('resize',fit);window.addEventListener('orientationchange',function(){setTimeout(fit,200)});
+if(window.visualViewport){window.visualViewport.addEventListener('resize',fit);}
+setInterval(fit,500);
+})();
+</script>
 </body>
 </html>
